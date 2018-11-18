@@ -7,7 +7,6 @@ class VideoUploadData {
         $this->videoDataArray = $videoDataArray;
         $this->title = $title;
         $this->description = $description;
-        $this->description = $description;
         $this->privacy = $privacy;
         $this->category = $category;
         $this->uploadedBy = $uploadedBy;

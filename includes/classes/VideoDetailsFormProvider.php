@@ -14,7 +14,7 @@ class VideoDetailsFormProvider {
         $privacyInput = $this->createPrivacyInput();
         $categoriesInput = $this->createCategoriesInput();
         $uploadButton = $this->createUploadButton();
-        return "<form action='processing.php' method='POST' enctype='multipart/from-data'>
+        return "<form action='processing.php' method='POST' enctype='multipart/form-data'>
                     $fileInput
                     $titleInput
                     $descriptionInput
@@ -26,7 +26,7 @@ class VideoDetailsFormProvider {
 
     private function createFileInput() {
 
-        return " <div class='form-group'>
+        return "<div class='form-group'>
                      <label for='exampleFormControlFile1'>Datei auswählen</label>
                     <input type='file' class='form-control-file' id='exampleFormControlFile1' name='fileInput' required>
                 </div>";
@@ -58,7 +58,7 @@ class VideoDetailsFormProvider {
         $query = $this->con->prepare("SELECT * FROM categories");
         $query->execute();
 
-        $html ="<div class='form-group'>
+        $html = "<div class='form-group'>
                     <select class='form-control' name= 'categoryInput'>";
 
         while($row = $query->fetch(PDO::FETCH_ASSOC)) {

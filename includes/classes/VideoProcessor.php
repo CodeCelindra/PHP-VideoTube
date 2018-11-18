@@ -2,11 +2,11 @@
 class VideoProcessor {
 
     private $con;
-    private $sizeLimit = 500000000;
+    private $sizeLimit = 50000000;
+    private $allowedTypes = array("mp4", "flv", "webm", "mkw", "vob", "ogv", "ogg", "avi", "wmv", "mow", "mpeg", "mpg");
 
     public function __construct($con) {
         $this->con = $con;
-
     }
 
     public function upload($videoUploadData) {
@@ -20,8 +20,6 @@ class VideoProcessor {
         $tempFilePath = str_replace(" ", "_", $tempFilePath);
 
         $isValidData = $this->processData($videoData, $tempFilePath);
-
-        echo $tempFilePath;
         
     }
 
@@ -29,14 +27,24 @@ class VideoProcessor {
         $videoType = pathInfo($filePath, PATHINFO_EXTENSION);
 
         if(!$this->isValidSize($videoData)) {
-            echo "Gewählte Datei ist zu groß. Maximale Datei Größe ist " . $this->sizelimit . " bytes";
+            echo "Gewählte Datei ist zu groß. Maximale Datei Größe ist " . $this->sizeLimit . " bytes";
             return false;
 
+        }
+        else if (!$this->isValidType($videoType)) {
+            echo "Dateitype ist nicht erlaubt";
+            return false;
         }
     }
 
     private function isValidSize($data) {
         return $data["size"] <= $this->sizeLimit;
+    }
+
+    private function  isValidType($type) {
+        // Konvertiert den Dateinmen in Kleinbuchstaben
+        $lowercase = strtolower($type);
+        return in_array($lowercase, $this->allowedTypes);
     }
 }
 ?>
